@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" >
     <title>Emergency Services in King County </title>
-    <link rel= "stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
 
     <style>
       html, body, #map { width: 100%; height: 100%; margin: 0; background: #fff; }
@@ -32,7 +32,7 @@ L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png').addTo(
 // 3. Add Lakes
 var Lakes = null;
 //Get GeoJson file
-Lakes = L.geoJson.ajax("Assets/WALakes.geoJson",{
+Lakes = L.geoJson.ajax("Assets/WALakes.geojson",{
     attribution: 'Washington Geospatial Open Data Portal'
 });
 
