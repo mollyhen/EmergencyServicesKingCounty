@@ -1,0 +1,97 @@
+//1. Create a map object
+
+  var mymap = L.map('map', {
+    center: [47.54, -121.98],
+    zoom: 9,
+    maxZoom: 14,
+    minZoom: 5,
+    zoomControl: false,
+    detectRetina: true
+  });
+
+  // 2. Base Map
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ | Data Layers &copy; King County Open Data | Made by Molly Henderson'}).addTo(mymap);
+
+var firestations = null;
+firestations = L.geoJson.ajax("assets/FS.json", {
+  onEachFeature: function (feature, layer) {
+    layer.bindPopup(<h5>Fire Station</h5> + "<br>" + feature.properties.NAME + "<br>" + feature.properties.ADDRESS + "<br>" + feature.properties.WEBSITE);
+  firestations.setStyle({
+    color: '#FF4033'
+  });
+},
+});
+
+var policestations = null;
+policestations = L.geoJson.ajax("assets/PS.json", {
+  onEachFeature: function (feature, layer) {
+    layer.bindPopup(<h5>Police Station</h5> + "<br>" + feature.properties.NAME + "<br>" + feature.properties.PHONE);
+    policestations.setStyle({
+      color: '#3346FF'
+    });
+  },
+});
+
+var hospitals = null;
+hospitals = L.geoJson.ajax("assests/MF.json", {
+  onEachFeature: function (feature, layer) {
+    layer.bindPopup(<h5>Medical Facility</h5> + "<br>" + feature.properties.NAME + "<br>" + feature.properties.ADDRESS + "<br>" + feature.properties.WEBSITE);
+    hospitals.setStyle({
+      color: '#FCFF33'
+    });
+  },
+});
+
+
+var KingCounty = L.geoJson.ajax("assets/KCBound.json", {
+  style: style
+}).addTo(mymap);
+
+function style(feature) {
+  return {
+    fillOpacity: 0,
+    weight: 2,
+    color: #000000
+  };
+}
+
+//empty pop up
+var popup = L.popup();
+//write functionto set properties of empty bindPopup
+function onMapClick(e) {
+  popup
+      .setLatLng(e.latlng)
+      .setContent("Coordinate Location at" + e.latlng.toString())
+      .openOn(mymap);
+}
+// listen for a click even on the map Element
+mymap.on('click', onMapClick);
+
+//legend
+var legend = L.control({position: 'bottomright'});
+
+lengend.onAdd = function () {
+
+  var div = L.DomUtil.create('div', 'legend');
+  div.innerHTML += '<b># Categories</b><br />';
+  div.innerHTML += '<i class="firestations"></i><p> Fire Stations</p>';
+  div.innerHTML += '<i class="policestations"></i><p> Police Stations</p>';
+  div.innerHTML += '<i class="hospitals"></i></i><p> Medical Facilities</p>';
+  return div;
+};
+
+//add lengend
+legend.addTo(mymap);
+
+
+//move zoom controls
+L.control.zoom(
+{
+  position: 'topright'
+}).addTo(mymap);
+
+//add scale bar
+L.control.scale({
+  position: 'bottomright'
+}).addTo(mymap);
