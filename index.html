@@ -1,0 +1,65 @@
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Services in King County</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+
+    <style>
+      html, body, #map { width: 100%; height: 100%; margin: 0; background: #fff; }
+
+      h2 {
+        color: black;
+        font-size: 36px;
+        background-color: white;
+      }
+    </style>
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.3.4/chroma.min.js"></script>
+
+</head>
+<body>
+
+<!-- Our web map and content will go here -->
+<div id="map"></div>
+<div>
+<h2>Emergency Services in King County, WA</h2>
+<p></p>
+</div>
+<script>
+
+//1. Create a map object
+
+  var mymap = L.map('map', {
+    center: [47.54, -121.98],
+    zoom: 9,
+    maxZoom: 14,
+    minZoom: 5,
+    zoomControl: false,
+    detectRetina: true
+  });
+
+  // 2. Base Map
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+     attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ'}).addTo(mymap);
+
+//move zoom controls
+L.control.zoom(
+{
+  position: 'topright'
+}).addTo(mymap);
+
+//add scale bar
+L.control.scale({
+  position: 'topleft'
+}).addTo(mymap);
+
+</script>
+</body>
+</html>
